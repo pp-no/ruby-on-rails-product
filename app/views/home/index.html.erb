@@ -1,0 +1,58 @@
+<section class="p-hero">
+  <div class="p-hero__content">
+    <p class="p-hero__eyebrow">Curated Daily Essentials</p>
+    <h1 class="p-hero__title">毎日の定番を、少しだけ気分の上がる一着に。</h1>
+    <p class="p-hero__lead">
+      Mini EC は、メンズとレディースのベーシックウェアを中心に、
+      今すぐ手に取りたくなる商品だけを絞って見せる学習用ストアです。
+    </p>
+
+    <div class="p-hero__actions">
+      <%= link_to(logged_in? ? "商品を見る" : "ログインして見る", logged_in? ? products_path : login_path, class: "c-button") %>
+      <%= link_to "一覧のイメージを見る", products_path, class: "c-button c-button--ghost" if logged_in? %>
+    </div>
+  </div>
+
+  <div class="p-hero__panel">
+    <div class="p-stat-card">
+      <p class="p-stat-card__label">公開中商品</p>
+      <p class="p-stat-card__value"><%= @published_count %></p>
+    </div>
+    <div class="p-stat-card">
+      <p class="p-stat-card__label">カテゴリ</p>
+      <p class="p-stat-card__value"><%= @category_count %></p>
+    </div>
+    <div class="p-stat-card">
+      <p class="p-stat-card__label">ブランド</p>
+      <p class="p-stat-card__value"><%= @brand_count %></p>
+    </div>
+  </div>
+</section>
+
+<section class="p-home-section">
+  <div class="p-section-heading">
+    <div>
+      <p class="p-section-heading__eyebrow">Featured Picks</p>
+      <h2 class="p-section-heading__title">おすすめアイテム</h2>
+    </div>
+  </div>
+
+  <div class="p-products-grid">
+    <% @featured_products.each do |product| %>
+        <article class="c-product-card c-product-card--static">
+          <div class="c-product-card__image-wrap">
+          <img class="c-product-card__image" src="<%= product_image_source(product) %>" alt="<%= product.name %>">
+          </div>
+          <div class="c-product-card__body">
+          <p class="c-product-card__meta">
+            <span><%= product.category.presence || "カテゴリ未設定" %></span>
+            <span><%= product.size_info.presence || "サイズ未設定" %></span>
+          </p>
+          <p class="c-product-card__brand"><%= product.brand_name %></p>
+          <h3 class="c-product-card__name"><%= product.name %></h3>
+          <p class="c-product-card__price"><%= number_to_currency(product.price, unit: "¥", precision: 0) %></p>
+        </div>
+      </article>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+# Bundler 設定とローカル gem を除外
+/.bundle
+/.gem
+/vendor/bundle
+
+# OS が生成するファイルを除外
+.DS_Store
+
+# 一時ファイルを除外
+/tmp
+
+# ログを除外
+/log
+
+# storage はすべて除外
+/storage
+
+# SQLite データベースを除外
+/db/*.sqlite3
+/db/*.sqlite3-*
+
+# 暗号化 credentials の master key を除外
+/config/master.key
+
+# エディタやツールの出力を除外
+.byebug_history
+coverage/
+
+# ローカルの仕様書を除外
+/Rails Ec Minispec Codex Cli.docx
+
+# ローカルの vendor を除外
+/vendor
+
+.agents
+.plugins
+/plugins
+AGENTS.md

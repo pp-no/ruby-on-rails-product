@@ -1,0 +1,54 @@
+<section class="p-products">
+  <div class="p-products-hero">
+    <div>
+      <p class="p-products-hero__eyebrow">Members Store</p>
+      <h1 class="p-products__title">商品一覧</h1>
+      <p class="p-products-hero__lead">
+        ベーシックな日常着を中心に、すぐ比較しやすい粒度で商品を並べています。
+      </p>
+    </div>
+
+    <div class="p-products-hero__stats">
+      <div class="p-products-hero__stat">
+        <span>Items</span>
+        <strong><%= @products.size %></strong>
+      </div>
+      <div class="p-products-hero__stat">
+        <span>Brands</span>
+        <strong><%= @brand_count %></strong>
+      </div>
+    </div>
+  </div>
+
+  <% if @categories.any? %>
+    <div class="p-filter-chips" aria-label="カテゴリ一覧">
+      <% @categories.each do |category| %>
+        <span class="c-chip"><%= category %></span>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @products.any? %>
+    <div class="p-products-grid">
+      <% @products.each do |product| %>
+        <%= link_to product_path(product), class: "c-product-card" do %>
+          <div class="c-product-card__image-wrap">
+            <img class="c-product-card__image" src="<%= product_image_source(product) %>" alt="<%= product.name %>">
+          </div>
+          <div class="c-product-card__body">
+            <p class="c-product-card__meta">
+              <span><%= product.category.presence || "カテゴリ未設定" %></span>
+              <span><%= product.size_info.presence || "サイズ未設定" %></span>
+            </p>
+            <p class="c-product-card__brand"><%= product.brand_name %></p>
+            <h2 class="c-product-card__name"><%= product.name %></h2>
+            <p class="c-product-card__price"><%= number_to_currency(product.price, unit: "¥", precision: 0) %></p>
+            <p class="c-product-card__cta">商品詳細を見る</p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="p-products__empty">公開中の商品はまだありません。</p>
+  <% end %>
+</section>

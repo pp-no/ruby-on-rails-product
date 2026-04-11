@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RubyOnRailsProduct</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="p-page">
+    <header class="p-site-header">
+      <div class="p-site-header__inner">
+        <%= link_to "Mini EC", logged_in? ? products_path : root_path, class: "p-site-header__logo" %>
+
+        <nav class="p-site-header__nav" aria-label="グローバルナビゲーション">
+          <%= link_to "Home", root_path, class: "p-site-header__link" %>
+          <% if logged_in? %>
+            <%= link_to "Products", products_path, class: "p-site-header__link" %>
+            <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "c-button c-button--ghost" %>
+          <% else %>
+            <%= link_to "ログイン", login_path, class: "c-button c-button--ghost" %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <main class="p-page__main">
+      <% if flash[:notice].present? %>
+        <p class="c-flash c-flash--notice"><%= flash[:notice] %></p>
+      <% end %>
+      <% if flash[:alert].present? %>
+        <p class="c-flash c-flash--alert"><%= flash[:alert] %></p>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>

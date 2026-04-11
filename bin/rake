@@ -1,0 +1,4 @@
+#!/opt/homebrew/opt/ruby@3.2/bin/ruby
+require_relative "../config/boot"
+require "rake"
+Rake.application.run

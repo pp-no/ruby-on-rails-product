@@ -1,0 +1,86 @@
+<section class="p-product-detail">
+  <div class="p-product-detail__actions">
+    <%= link_to "← 商品一覧に戻る", products_path, class: "c-button c-button--ghost" %>
+  </div>
+
+  <div class="p-product-detail__body">
+    <div class="p-product-detail__media">
+      <img
+        class="p-product-detail__image"
+        src="<%= product_image_source(@product) %>"
+        alt="<%= @product.name %>">
+    </div>
+
+    <div class="p-product-detail__info">
+      <p class="p-product-detail__eyebrow"><%= @product.category.presence || "Curated Item" %></p>
+      <p class="p-product-detail__brand"><%= @product.brand_name %></p>
+      <h1 class="p-product-detail__title"><%= @product.name %></h1>
+      <p class="p-product-detail__price"><%= number_to_currency(@product.price, unit: "¥", precision: 0) %></p>
+      <p class="p-product-detail__lead">
+        シンプルな比較で選びやすいよう、必要な情報だけを整理した商品詳細です。
+      </p>
+
+      <dl class="p-product-detail-meta">
+        <div class="p-product-detail-meta__row">
+          <dt class="p-product-detail-meta__label">カテゴリ</dt>
+          <dd class="p-product-detail-meta__value"><%= @product.category.presence || "未設定" %></dd>
+        </div>
+        <div class="p-product-detail-meta__row">
+          <dt class="p-product-detail-meta__label">サイズ情報</dt>
+          <dd class="p-product-detail-meta__value"><%= @product.size_info.presence || "未設定" %></dd>
+        </div>
+      </dl>
+
+      <div class="p-product-detail__description">
+        <h2 class="p-product-detail__sub-title">商品説明</h2>
+        <p><%= @product.description.presence || "説明は準備中です。" %></p>
+      </div>
+
+      <div class="p-product-purchase">
+        <div class="p-product-purchase__row">
+          <span>配送目安</span>
+          <strong>2〜4営業日</strong>
+        </div>
+        <div class="p-product-purchase__row">
+          <span>送料</span>
+          <strong>5,000円以上で無料</strong>
+        </div>
+        <div class="p-product-purchase__row">
+          <span>返品対応</span>
+          <strong>到着後7日以内</strong>
+        </div>
+        <button type="button" class="c-button p-product-purchase__button">カートに入れる（表示のみ）</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% if @related_products.any? %>
+  <section class="p-home-section">
+    <div class="p-section-heading">
+      <div>
+        <p class="p-section-heading__eyebrow">Related Items</p>
+        <h2 class="p-section-heading__title">同じカテゴリのおすすめ</h2>
+      </div>
+    </div>
+
+    <div class="p-products-grid">
+      <% @related_products.each do |product| %>
+        <%= link_to product_path(product), class: "c-product-card" do %>
+          <div class="c-product-card__image-wrap">
+            <img class="c-product-card__image" src="<%= product_image_source(product) %>" alt="<%= product.name %>">
+          </div>
+          <div class="c-product-card__body">
+            <p class="c-product-card__meta">
+              <span><%= product.category.presence || "カテゴリ未設定" %></span>
+              <span><%= product.size_info.presence || "サイズ未設定" %></span>
+            </p>
+            <p class="c-product-card__brand"><%= product.brand_name %></p>
+            <h3 class="c-product-card__name"><%= product.name %></h3>
+            <p class="c-product-card__price"><%= number_to_currency(product.price, unit: "¥", precision: 0) %></p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+<% end %>

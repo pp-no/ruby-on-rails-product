@@ -1,0 +1,46 @@
+<section class="p-auth">
+  <div class="p-auth__intro">
+    <p class="p-auth__eyebrow">Member Access</p>
+    <h1 class="p-auth__title">セレクトされた商品を、ログイン後に閲覧できます。</h1>
+    <p class="p-auth__lead">
+      このアプリでは、会員向けストアの想定で商品一覧を保護しています。
+      まずはデモアカウントでログインして、一覧と商品詳細の流れを確認してください。
+    </p>
+
+    <div class="p-auth__demo">
+      <p class="p-auth__demo-title">デモアカウント</p>
+      <dl class="p-auth__demo-list">
+        <div>
+          <dt>Email</dt>
+          <dd>demo@example.com</dd>
+        </div>
+        <div>
+          <dt>Password</dt>
+          <dd>password123</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="p-auth__card">
+    <h2 class="p-auth__card-title">ログイン</h2>
+
+    <% if flash[:alert].present? %>
+      <p class="c-flash c-flash--alert"><%= flash[:alert] %></p>
+    <% end %>
+
+    <%= form_with url: login_path, method: :post, local: true, class: "p-auth-form" do %>
+      <div class="p-auth-form__field">
+        <%= label_tag :email, "メールアドレス", class: "p-auth-form__label" %>
+        <%= email_field_tag :email, params[:email], required: true, autofocus: true, class: "p-auth-form__input", placeholder: "demo@example.com" %>
+      </div>
+
+      <div class="p-auth-form__field">
+        <%= label_tag :password, "パスワード", class: "p-auth-form__label" %>
+        <%= password_field_tag :password, nil, required: true, class: "p-auth-form__input", placeholder: "8文字以上" %>
+      </div>
+
+      <%= submit_tag "ログインして商品を見る", class: "c-button p-auth-form__submit" %>
+    <% end %>
+  </div>
+</section>
