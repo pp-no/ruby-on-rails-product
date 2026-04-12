@@ -9,6 +9,11 @@ AI エージェントを活用したバイブコーディングの題材とし�
 - 商品詳細表示
 - 未ログイン時の商品ページアクセス制御
 
+## 公開方針
+このアプリは本格運用よりも、ポートフォリオ用途で URL 共有できることを重視しています。  
+Render の Free Web Service での公開を想定しており、`render.yaml` と `bin/render-start` を用意しています。  
+無料プランの制約上、SQLite は永続化せず、起動ごとに `db:prepare` と `db:seed` を実行してデモデータを再投入する構成です。
+
 ## セットアップ手順
 前提: Ruby / Bundler / SQLite3 が利用可能であること
 
@@ -24,6 +29,19 @@ bin/rails s
 
 ブラウザで以下にアクセスします。
 - `http://localhost:3000/login`
+
+## Render での公開
+このリポジトリは Render 向けの設定済みです。GitHub に push したあと、Render で `New +` から `Blueprint` または `Web Service` を選んでデプロイできます。
+
+主な設定:
+- `render.yaml`: Render の無料 Web Service 設定
+- `bin/render-start`: 起動時に DB を準備し、seed を投入してから Puma を起動
+
+公開時のポイント:
+- `RAILS_MASTER_KEY` は Render 側で環境変数として設定してください
+- `SECRET_KEY_BASE` は `render.yaml` の `generateValue` で自動生成されます
+- 無料プランではサービスが 15 分アイドルでスリープし、ローカルファイルは再起動時に失われます
+- そのため、データ保持ではなくデモ公開向けの構成です
 
 ## デモログイン情報
 - Email: `demo@example.com`

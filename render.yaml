@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: ruby-on-rails-product
+    runtime: ruby
+    plan: free
+    buildCommand: bundle install && bundle exec rails assets:precompile
+    startCommand: ./bin/render-start
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_LOG_LEVEL
+        value: info
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "1"
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: SECRET_KEY_BASE
+        generateValue: true
