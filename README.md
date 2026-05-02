@@ -1,7 +1,7 @@
 # Ruby on Rails Product (Mini EC 学習用)
 
 ## アプリ概要
-個人学習向けのミニEC風Webアプリです。  
+設定より規約という思想を持つrailsにとってチーム開発における迷わないコーディングやコードレビューの効率化、AIとの相性も良いというチーム開発での悩みを一気に解決できるということで、個人学習向けのミニEC風Webアプリを作成。
 AI エージェントを活用したバイブコーディングの題材として、`planner` が改善方針を整理し、`generator` が画面や導線を実装し、`evaluator` が検証観点を持って確認する形で作成・改善しています。  
 現在は以下を実装しています。
 - メールアドレス/パスワードでのログイン・ログアウト
@@ -22,13 +22,35 @@ bundle install
 bin/rails db:setup
 ```
 
-## 起動方法
+## ローカル Ruby での起動
 ```bash
 bin/rails s
 ```
 
 ブラウザで以下にアクセスします。
-- `http://localhost:3000/login`
+- `http://127.0.0.1:3000/login`
+
+補足:
+- ローカル起動は、`.ruby-version` に合う Ruby と `Gemfile.lock` に合う Bundler が入っている前提です
+- 手元の Ruby / Bundler が合わない場合は `bin/rails s` が失敗するため、その場合は下の Docker 起動を使ってください
+
+## Docker での起動
+Docker Compose を使う場合は、プロジェクトルートで以下を実行します。
+
+```bash
+docker compose up --build
+```
+
+初回起動時は `Dockerfile` のビルドに時間がかかります。起動後は以下にアクセスします。
+- `http://127.0.0.1:3000/`
+- `http://127.0.0.1:3000/login`
+
+補足:
+- `compose.yml` では `Dockerfile` を使ってアプリをビルドします
+- ローカル Docker では `FORCE_SSL=false` を設定し、HTTP で開けるようにしています
+- ブラウザによっては `localhost` を自動で `https` に寄せることがあるため、ローカル確認では `127.0.0.1` の利用を推奨します
+- コンテナ起動時に `bin/docker-entrypoint` が `db:prepare` と `db:seed` を実行します
+- SQLite はコンテナ内に作成されるため、`docker compose down --volumes` やコンテナ再作成時にはデータが消えることがあります
 
 ## Render での公開
 このリポジトリは Render 向けの設定済みです。GitHub に push したあと、Render で `New +` から `Blueprint` または `Web Service` を選んでデプロイできます。

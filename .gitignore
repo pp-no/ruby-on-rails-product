@@ -36,3 +36,11 @@ coverage/
 .plugins
 /plugins
 AGENTS.md
+CLAUDE.md
+
+# Claude Code のメモリファイルを除外
+.claude/
+
+# Playwright MCP が生成したファイルを除外
+.playwright-mcp/
+playwright-login-snapshot.md

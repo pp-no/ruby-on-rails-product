@@ -1,0 +1,11 @@
+services:
+  web:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      FORCE_SSL: "false"
+      SECRET_KEY_BASE: docker-local-secret-key-base
+      RAILS_LOG_LEVEL: info
+    restart: unless-stopped
